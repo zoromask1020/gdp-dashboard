@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 # Your Telegram bot token and chat ID
-BOT_TOKEN = 8421113239:AAEI_RdMhkJCznGfLxj931EJ04t9UeFl1PU
+BOT_TOKEN = '8421113239:AAEI_RdMhkJCznGfLxj931EJ04t9UeFl1PU'
 CHAT_ID = 8341153272  # or get dynamically from user input if you want
 
 def send_telegram_message(text):
