@@ -1,8 +1,8 @@
 import streamlit as st
 import requests
 
-query_params = st.experimental_get_query_params()
-CHAT_ID = query_params.get('chat_id', [''])[0] 
+CHAT_ID = st.query_params.get('chat_id', [''])[0]
+
 
 # Your Telegram bot token and chat ID
 BOT_TOKEN = '8421113239:AAEI_RdMhkJCznGfLxj931EJ04t9UeFl1PU'
