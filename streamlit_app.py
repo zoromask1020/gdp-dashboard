@@ -47,4 +47,4 @@ if submit_button:
         if success:
             st.success("Form submitted and message sent to Telegram!")
         else:
-            st.error("Failed to send message to Telegram. Please try again.")
+            st.error(f"Failed to send message to Telegram. Please try again.{CHAT_ID},{message}")
