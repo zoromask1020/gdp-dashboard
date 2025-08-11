@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
-
-CHAT_ID = st.query_params.get('chat_id', [''])[0]
+old=st.query_params.get('chat_id', [''])
+CHAT_ID = old[0]
 
 
 # Your Telegram bot token and chat ID
@@ -47,4 +47,4 @@ if submit_button:
         if success:
             st.success("Form submitted and message sent to Telegram!")
         else:
-            st.error(f"Failed to send message to Telegram. Please try again.{CHAT_ID},{message}")
+            st.error(f"Failed to send message to Telegram. Please try again.old: {old},{CHAT_ID},{message}")
