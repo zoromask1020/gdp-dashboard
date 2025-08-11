@@ -1,6 +1,6 @@
 import streamlit as st
 import requests
-st.write("Query params:", st.query_params)
+
 
 chat_id = st.query_params.get('chatid', [''])
 
