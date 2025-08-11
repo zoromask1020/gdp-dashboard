@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 st.write("Query params:", st.query_params)
 
-chat_id = st.query_params.get('chatid', [''])[0]
+chat_id = st.query_params.get('chatid', [''])
 
 st.write("Chat ID from query:", chat_id)
 CHAT_ID = chat_id
