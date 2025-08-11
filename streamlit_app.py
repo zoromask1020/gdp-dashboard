@@ -4,7 +4,6 @@ import requests
 
 chat_id = st.query_params.get('chatid', [''])
 
-st.write("Chat ID from query:", chat_id)
 CHAT_ID = chat_id
 
 
