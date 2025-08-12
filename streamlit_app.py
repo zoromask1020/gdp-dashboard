@@ -49,7 +49,7 @@ if submit_button:
             response = requests.post(N8N_WEBHOOK_URL, json=payload)
 
             if response.status_code == 200:
-                st.success("Form submitted to n8n successfully!")
+                st.success("Form submitted successfully! you can close the tab")
             else:
                 st.error(f"Failed to send to n8n. Status code: {response.status_code}")
         except Exception as e:
