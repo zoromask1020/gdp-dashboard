@@ -18,16 +18,19 @@ with st.form(key='service_form'):
     servicedesign = st.selectbox("Services", ["", "House Cleaning", "Car Cleaning", "Office Cleaning"])
     condition = st.text_input("Condition", "") 
     
+    # Let the user pick their preferred cleaning date & time
+    preferred_date = st.date_input("Preferred Cleaning Date")
+    preferred_time = st.time_input("Preferred Cleaning Time")
+    
     submit_button = st.form_submit_button(label='Submit')
 
 if submit_button:
     if not (name and email and phone and rate and servicedesign):
         st.error("Please fill all the fields!")
     else:
-        # Auto-generate current date and time
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
-        current_date = now.strftime("%Y-%m-%d")
+        # Convert to string for DB and n8n
+        current_time = preferred_time.strftime("%H:%M:%S")
+        current_date = preferred_date.strftime("%Y-%m-%d")
 
         # Build Telegram confirmation message
         text_message = (
@@ -38,12 +41,12 @@ if submit_button:
             f"Rate: {rate}\n"
             f"Services: {servicedesign}\n"
             f"Condition: {condition}\n"
-            f"Time: {current_time}\n"
-            f"Date: {current_date}\n"
+            f"Preferred Time: {current_time}\n"
+            f"Preferred Date: {current_date}\n"
             f"✅ We’ll contact you shortly."
         )
 
-        # Data to send to n8n (and then to MySQL)
+        # Data to send to n8n
         payload = {
             "name": name,
             "email": email,
@@ -58,9 +61,7 @@ if submit_button:
         }
 
         try:
-            # Send to n8n webhook
             response = requests.post(N8N_WEBHOOK_URL, json=payload)
-
             if response.status_code == 200:
                 st.success("Form submitted successfully! You can close the tab.")
             else:
