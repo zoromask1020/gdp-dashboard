@@ -13,8 +13,8 @@ with st.form(key='service_form'):
     name = st.text_input("Name", "")
     email = st.text_input("Email", "")
     phone = st.text_input("Phone", "")
-    rate = st.text_input("Rate", "")
-    servicedesign = st.selectbox("Service Design", ["", "House Cleaning", "Car Cleaning", "Office Cleaning"])
+    rate = st.selectbox("Rate", ["", "1000-2000", "2000-3000", "3000-4000"])
+    servicedesign = st.selectbox("Services", ["", "House Cleaning", "Car Cleaning", "Office Cleaning"])
     
     submit_button = st.form_submit_button(label='Submit')
 
@@ -29,7 +29,7 @@ if submit_button:
             f"Email: {email}\n"
             f"Phone: {phone}\n"
             f"Rate: {rate}\n"
-            f"Service Design: {servicedesign}\n"
+            f"Services: {servicedesign}\n"
             f"✅ We’ll contact you shortly."
         )
 
