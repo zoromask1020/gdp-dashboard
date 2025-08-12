@@ -31,7 +31,7 @@ if submit_button:
 
         # Build Telegram confirmation message
         text_message = (
-            f"*New Service Request Received!*\n\n"
+            f"*New Service Request Added!*\n\n"
             f"Name: {name}\n"
             f"Email: {email}\n"
             f"Phone: {phone}\n"
