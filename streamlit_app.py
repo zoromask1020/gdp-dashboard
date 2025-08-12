@@ -5,7 +5,7 @@ import requests
 N8N_WEBHOOK_URL = "https://202e1bfb0d1d.ngrok-free.app/webhook-test/cleaning"
 
 # Get chat_id from query params
-chat_id = st.query_params.get("chatid", [""])[0]
+chat_id = st.query_params.get("chatid", [""])
 
 st.title("Service Request Form")
 
