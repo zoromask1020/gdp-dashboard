@@ -1,27 +1,8 @@
 import streamlit as st
 import requests
 
-
-chat_id = st.query_params.get('chatid', [''])
-
-CHAT_ID = chat_id
-
-
-# Your Telegram bot token and chat ID
-BOT_TOKEN = '8421113239:AAEI_RdMhkJCznGfLxj931EJ04t9UeFl1PU'
-# CHAT_ID = 8341153272  # or get dynamically from user input if you want
-
-
-
-def send_telegram_message(text):
-    url = f"https://api.telegram.org/bot8421113239:AAEI_RdMhkJCznGfLxj931EJ04t9UeFl1PU/sendMessage"
-    payload = {
-        "chat_id": CHAT_ID,
-        "text": text,
-        "parse_mode": "Markdown"
-    }
-    response = requests.post(url, data=payload)
-    return response.ok
+# Your n8n webhook URL (Test URL)
+N8N_WEBHOOK_URL = "https://202e1bfb0d1d.ngrok-free.app/webhook-test/cleaning"
 
 st.title("Service Request Form")
 
@@ -38,16 +19,22 @@ if submit_button:
     if not (name and email and phone and rate and servicedesign):
         st.error("Please fill all the fields!")
     else:
-        message = (
-            f"*New Service Request:*\n"
-            f"Name: {name}\n"
-            f"Email: {email}\n"
-            f"Phone: {phone}\n"
-            f"Rate: {rate}\n"
-            f"Service Design: {servicedesign}"
-        )
-        success = send_telegram_message(message)
-        if success:
-            st.success("Form submitted and message sent to Telegram!")
-        else:
-            st.error(f"Failed to send message to Telegram. Please try again.old: {chat_id},{CHAT_ID},{message}")
+        # Data to send to n8n
+        payload = {
+            "name": name,
+            "email": email,
+            "phone": phone,
+            "rate": rate,
+            "service_design": servicedesign
+        }
+
+        try:
+            # Send to n8n webhook
+            response = requests.post(N8N_WEBHOOK_URL, json=payload)
+
+            if response.status_code == 200:
+                st.success("Form submitted to n8n successfully!")
+            else:
+                st.error(f"Failed to send to n8n. Status code: {response.status_code}")
+        except Exception as e:
+            st.error(f"Error: {e}")
