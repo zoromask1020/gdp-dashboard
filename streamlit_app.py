@@ -14,7 +14,7 @@ with st.form(key='service_form'):
     email = st.text_input("Email", "")
     phone = st.text_input("Phone", "")
     rate = st.text_input("Rate", "")
-    servicedesign = st.selectbox("Service Design", ["", "Basic", "Premium", "Custom"])
+    servicedesign = st.selectbox("Service Design", ["", "House Cleaning", "Car Cleaning", "Office Cleaning"])
     
     submit_button = st.form_submit_button(label='Submit')
 
