@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 from datetime import datetime
 # Your n8n webhook URL (Test URL)
-N8N_WEBHOOK_URL = "https://33f66df340cc.ngrok-free.app/webhook-test/cleaning"
+N8N_WEBHOOK_URL = "https://33f66df340cc.ngrok-free.app/webhook/cleaning"
 # Get chat_id from query params
 chat_id = st.query_params.get("chatid", [""])
 st.title("Service Request Form")
