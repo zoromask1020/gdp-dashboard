@@ -3,7 +3,7 @@ import requests
 from datetime import datetime
 
 # Your n8n webhook URL (Test URL/Production URL)
-N8N_WEBHOOK_URL = "https://c46471e67188.ngrok-free.app/webhook/cleaning"
+N8N_WEBHOOK_URL = "https://c46471e67188.ngrok-free.app/webhook-test/cleaning"
 
 # Get chat_id from query params
 chat_id = st.query_params.get("chatid", [""])
