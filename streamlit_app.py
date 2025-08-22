@@ -1,43 +1,50 @@
 import streamlit as st
 import requests
 from datetime import datetime
+
 # Your n8n webhook URL (Test URL)
 N8N_WEBHOOK_URL = "https://343ed076b52d.ngrok-free.app/webhook/cleaning"
-# Get chat_id from query params
-chat_id = st.query_params.get("chatid", [""])
 
+# Get chat_id and service from query params
+chat_id = st.query_params.get("chatid", [""])[0]
 service_choice = st.query_params.get("service", [""])[0]
 
+# Mapping param -> dropdown index
+service_map = {
+    "": 0,
+    "house": 1,
+    "car": 2,
+    "office": 3
+}
 
 st.title("Service Request Form")
+
 with st.form(key='service_form'):
     name = st.text_input("Name", "")
     email = st.text_input("Email", "")
     phone = st.text_input("Phone", "")
     rate = st.selectbox("Rate", ["", "1000-2000", "2000-3000", "3000-4000"])
     
-    # servicedesign = st.selectbox("Services", ["", "House Cleaning", "Car Cleaning", "Office Cleaning"])
-
     servicedesign = st.selectbox(
-    "Services", 
-    ["", "House Cleaning", "Car Cleaning", "Office Cleaning"],
-    index=["", "house", "car", "office"].index(service_choice) if service_choice in ["house","car","office"] else 0
-)
+        "Services", 
+        ["", "House Cleaning", "Car Cleaning", "Office Cleaning"],
+        index=service_map.get(service_choice, 0)
+    )
     
     condition = st.text_input("Condition", "") 
     address = st.text_input("Address", "")
-    # Let the user pick their preferred cleaning date & time
     preferred_date = st.date_input("Preferred Cleaning Date")
     preferred_time = st.time_input("Preferred Cleaning Time")
+    
     submit_button = st.form_submit_button(label='Submit')
+
 if submit_button:
     if not (name and email and phone and rate and servicedesign):
         st.error("Please fill all the fields!")
     else:
-        # Convert to string for DB and n8n
         current_time = preferred_time.strftime("%H:%M:%S")
         current_date = preferred_date.strftime("%Y-%m-%d")
-        # Build Telegram confirmation message
+        
         text_message = (
             f"*New Service Request Added!*\n\n"
             f"Name: {name}\n"
@@ -51,7 +58,7 @@ if submit_button:
             f"Preferred Date: {current_date}\n"
             f"✅ We’ll contact you shortly."
         )
-        # Data to send to n8n
+        
         payload = {
             "name": name,
             "email": email,
@@ -59,12 +66,13 @@ if submit_button:
             "rate": rate,
             "service_design": servicedesign,
             "condition": condition,
-            "address":address,
+            "address": address,
             "time": current_time,
             "date": current_date,
             "chat_id": chat_id,
             "text": text_message
         }
+        
         try:
             response = requests.post(N8N_WEBHOOK_URL, json=payload)
             if response.status_code == 200:
