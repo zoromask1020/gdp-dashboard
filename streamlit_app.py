@@ -5,13 +5,25 @@ from datetime import datetime
 N8N_WEBHOOK_URL = "https://343ed076b52d.ngrok-free.app/webhook/cleaning"
 # Get chat_id from query params
 chat_id = st.query_params.get("chatid", [""])
+
+service_choice = st.query_params.get("service", [""])[0]
+
+
 st.title("Service Request Form")
 with st.form(key='service_form'):
     name = st.text_input("Name", "")
     email = st.text_input("Email", "")
     phone = st.text_input("Phone", "")
     rate = st.selectbox("Rate", ["", "1000-2000", "2000-3000", "3000-4000"])
-    servicedesign = st.selectbox("Services", ["", "House Cleaning", "Car Cleaning", "Office Cleaning"])
+    
+    # servicedesign = st.selectbox("Services", ["", "House Cleaning", "Car Cleaning", "Office Cleaning"])
+
+    servicedesign = st.selectbox(
+    "Services", 
+    ["", "House Cleaning", "Car Cleaning", "Office Cleaning"],
+    index=["", "house", "car", "office"].index(service_choice) if service_choice in ["house","car","office"] else 0
+)
+    
     condition = st.text_input("Condition", "") 
     address = st.text_input("Address", "")
     # Let the user pick their preferred cleaning date & time
