@@ -7,7 +7,7 @@ N8N_WEBHOOK_URL = "https://343ed076b52d.ngrok-free.app/webhook/cleaning"
 
 # Get chat_id and service from query params
 chat_id = st.query_params.get("chatid", [""])
-service_choice = st.query_params.get("service", [""])[0]
+service_choice = st.query_params.get("service", [""])
 
 # Mapping param -> label
 service_labels = {
